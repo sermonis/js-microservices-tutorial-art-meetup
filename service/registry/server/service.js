@@ -66,7 +66,7 @@ module.exports = ( config ) => {
 
 		const serviceKey = serviceRegistry.unregister( serviceName, serviceVersion, serviceIp, servicePort );
 
-		return res.json( { result: `Deleted ${ serviceKey }`} );
+		return res.json( { result: `Deleted ${ serviceKey }`} ); //
 
 	} );
 
