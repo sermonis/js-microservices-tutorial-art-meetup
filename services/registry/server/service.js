@@ -18,6 +18,7 @@ module.exports = ( config ) => {
 		service.use( ( req, res, next ) => {
 			
 			log.debug( `${ req.method }: ${ req.url }` );
+
 			return next();
 		
 		} );
@@ -88,6 +89,7 @@ module.exports = ( config ) => {
 			} );
 
 		}
+
 		return res.json( svc );
 
 	} );

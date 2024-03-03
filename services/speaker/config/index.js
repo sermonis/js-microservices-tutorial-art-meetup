@@ -1,10 +1,5 @@
+const path = require(' path' );
 const bunyan = require( 'bunyan' );
-
-// Load package.json
-// const manifest = require( '../package.json' );
-
-// // Get some meta info from the package.json
-// const { name, version } = manifest;
 
 /**
 ** Get some meta info from the package.json.
@@ -26,32 +21,56 @@ const getLogger = ( serviceName, serviceVersion, level ) => bunyan.createLogger(
 ** for different environments.
 **/
 module.exports = {
-	
+
 	development: {
 
 		name,
 		version,
 		serviceTimeout: 30,
+
 		log: () => getLogger( name, version, 'debug' ),
-	
+
+		data: {
+			
+			images: path.join( __dirname, '../data/images' ),
+			speakers: path.join( __dirname, '../data/speakers.json' )
+		
+		},
+
 	},
-	
+
 	production: {
 
 		name,
 		version,
 		serviceTimeout: 30,
+
 		log: () => getLogger( name, version, 'info' ),
 
-	},
-	
-	test: {
+		data: {
+			
+			images: path.join( __dirname, '../data/images' ),
+			speakers: path.join( __dirname, '../data/speakers.json' )
+		
+		},
 
+	},
+
+	test: {
+		
 		name,
 		version,
 		serviceTimeout: 30,
-		log: () => getLogger( name, version, 'fatal' ),
 
+		log: () => getLogger( name, version, 'fatal' ),
+		
+		data: {
+		
+			images: path.join( __dirname, '../data/images' ),
+			speakers: path.join( __dirname, '../data/speakers.json' )
+		
+		},		
+	
 	},
 
 };

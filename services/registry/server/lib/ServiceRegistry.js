@@ -5,8 +5,6 @@ const semver = require( 'semver' );
 ** 
 **/
 class ServiceRegistry {
-// export default class ServiceRegistry {
-// module.exports = class ServiceRegistry {
 
 	/**
 	** 
