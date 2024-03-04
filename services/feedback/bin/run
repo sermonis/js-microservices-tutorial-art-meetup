@@ -13,15 +13,14 @@ const server = http.createServer( service );
 ** Important - a service should not have a fixed 
 ** port but should randomly choose one.
 **/
-// server.listen( 0 );
 server.listen( process.env.PORT || 0 );
 
 server.on( 'listening', () => {
 
 	const getUrl = ( action = 'register' ) => [ 'http://localhost:3000', 
-		action, config.name, config.version, server.address().port,
+		action, config.name, config.version, server.address().port, 
 	].join( '/' );
-
+	
 	const registerService = () => axios.put( getUrl( 'register' ) ).catch( err => log.fatal( err ) );
 	const unregisterService = () => axios.delete( getUrl( 'unregister' ) ).catch( err => log.fatal( err ) );
 
@@ -30,24 +29,32 @@ server.on( 'listening', () => {
 	/**
 	** 
 	**/
-	const interval = setInterval( registerService, 20 * 1000 );
+	const interval = setInterval( registerService, 15 * 1000 );
 
 	const cleanup = async () => {
-		
-		clearInterval( interval );
-		await unregisterService();
 
-	}
+		let clean = false;
 
-	process.on(	'uncaughtException', async () => {
+		if ( !clean ) {
+
+			clean = true;
+	
+			clearInterval( interval );
+			await unregisterService();
+
+		}
+
+	};
+
+	process.on( 'uncaughtException', async () => {
 		
 		await cleanup();
 		process.exit( 0 );
-
+	
 	} );
 
 	process.on( 'SIGINT', async () => {
-	
+		
 		await cleanup();
 		process.exit( 0 );
 	
@@ -59,12 +66,6 @@ server.on( 'listening', () => {
 		process.exit( 0 );
 	
 	} );
-
-	// setTimeout( () => {
-	
-	// 	throw new Error( 'Something happened' );
-	
-	// }, 10000 );
 
 	log.info( `Hi there! I'm listening on port ${ server.address().port } in ${ service.get( 'env' ) } mode.` );
 

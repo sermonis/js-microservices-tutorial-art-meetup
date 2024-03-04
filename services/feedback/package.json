@@ -1,0 +1,25 @@
+{
+  "name": "feedback",
+  "version": "1.0.0",
+  "description": "A service to read and post feedback",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon bin/run | bunyan"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "axios": "^1.6.7",
+    "bunyan": "^1.8.15",
+    "express": "^4.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
